@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ferramentas Digitais – Medidas e Avaliação | EEFERP – USP</title>
+  <style>
+    :root{
+      --azul:#2f3ea8;
+      --azul-escuro:#24328c;
+      --cinza:#f4f6fb;
+      --texto:#1f2937;
+      --texto-suave:#5b6472;
+      --borda:#e5e7eb;
+      --card:#ffffff;
+      --verde:#0f8a5f;
+      --amarelo:#c58a00;
+    }
+
+    *{box-sizing:border-box}
+
+    body{
+      margin:0;
+      font-family:Arial, Helvetica, sans-serif;
+      background:var(--cinza);
+      color:var(--texto);
+    }
+
+    header{
+      background:linear-gradient(135deg,var(--azul),var(--azul-escuro));
+      color:#fff;
+      padding:36px 20px 28px;
+    }
+
+    .header-wrap{
+      max-width:1200px;
+      margin:0 auto;
+    }
+
+    h1{
+      margin:0 0 8px 0;
+      font-size:32px;
+      line-height:1.15;
+    }
+
+    .subtitulo{
+      margin:0;
+      font-size:17px;
+      opacity:.95;
+    }
+
+    .topbar{
+      max-width:1200px;
+      margin:22px auto 0;
+      display:flex;
+      gap:12px;
+      flex-wrap:wrap;
+    }
+
+    .pill{
+      background:rgba(255,255,255,.16);
+      border:1px solid rgba(255,255,255,.22);
+      color:#fff;
+      padding:8px 12px;
+      border-radius:999px;
+      font-size:13px;
+    }
+
+    main{
+      max-width:1200px;
+      margin:28px auto 50px;
+      padding:0 20px;
+    }
+
+    .painel{
+      background:#fff;
+      border:1px solid var(--borda);
+      border-radius:18px;
+      padding:18px;
+      margin-bottom:22px;
+      box-shadow:0 8px 24px rgba(0,0,0,.05);
+    }
+
+    .painel h2{
+      margin:0 0 14px;
+      font-size:20px;
+      color:var(--azul);
+    }
+
+    .controles{
+      display:flex;
+      gap:12px;
+      flex-wrap:wrap;
+      align-items:center;
+    }
+
+    input[type="search"], select{
+      padding:12px 14px;
+      border:1px solid var(--borda);
+      border-radius:10px;
+      font-size:14px;
+      background:#fff;
+      color:var(--texto);
+    }
+
+    input[type="search"]{
+      min-width:280px;
+      flex:1;
+    }
+
+    .grade{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+      gap:18px;
+    }
+
+    .card{
+      background:var(--card);
+      border:1px solid var(--borda);
+      border-radius:18px;
+      padding:20px;
+      box-shadow:0 8px 24px rgba(0,0,0,.05);
+      display:flex;
+      flex-direction:column;
+      min-height:240px;
+    }
+
+    .card h3{
+      margin:0 0 8px;
+      color:var(--azul);
+      font-size:20px;
+    }
+
+    .descricao{
+      margin:0 0 14px;
+      color:var(--texto-suave);
+      line-height:1.5;
+      font-size:14px;
+    }
+
+    .meta{
+      display:flex;
+      gap:8px;
+      flex-wrap:wrap;
+      margin-bottom:16px;
+    }
+
+    .tag{
+      font-size:12px;
+      padding:6px 10px;
+      border-radius:999px;
+      background:#eef2ff;
+      color:var(--azul);
+      border:1px solid #dbe3ff;
+    }
+
+    .status{
+      font-size:12px;
+      padding:6px 10px;
+      border-radius:999px;
+      border:1px solid;
+    }
+
+    .status.pronto{
+      color:var(--verde);
+      border-color:#b7e5d3;
+      background:#eefaf5;
+    }
+
+    .status.breve{
+      color:var(--amarelo);
+      border-color:#f0ddb0;
+      background:#fff8e8;
+    }
+
+    .acoes{
+      margin-top:auto;
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+
+    .botao{
+      text-decoration:none;
+      padding:11px 14px;
+      border-radius:10px;
+      font-size:14px;
+      font-weight:700;
+      display:inline-block;
+      transition:.2s ease;
+    }
+
+    .botao.primario{
+      background:var(--azul);
+      color:#fff;
+    }
+
+    .botao.primario:hover{
+      background:var(--azul-escuro);
+    }
+
+    .botao.secundario{
+      background:#fff;
+      color:var(--azul);
+      border:1px solid var(--borda);
+    }
+
+    .botao.secundario:hover{
+      background:#f8faff;
+    }
+
+    .observacao{
+      margin-top:18px;
+      color:var(--texto-suave);
+      font-size:13px;
+      line-height:1.5;
+    }
+
+    footer{
+      max-width:1200px;
+      margin:0 auto 40px;
+      padding:0 20px;
+      color:var(--texto-suave);
+      font-size:13px;
+    }
+
+    .oculto{
+      display:none !important;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="header-wrap">
+      <h1>Ferramentas Digitais – Medidas e Avaliação</h1>
+      <p class="subtitulo">Escola de Educação Física e Esporte de Ribeirão Preto – USP</p>
+
+      <div class="topbar">
+        <div class="pill">Disciplina REF0063</div>
+        <div class="pill">Portal de apps didáticos</div>
+        <div class="pill">Acesso centralizado às ferramentas</div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="painel">
+      <h2>Biblioteca de aplicativos</h2>
+      <div class="controles">
+        <input type="search" id="busca" placeholder="Buscar ferramenta..." />
+        <select id="filtroModo">
+          <option value="todos">Todos os modos</option>
+          <option value="interno">Mostrar apenas internos</option>
+          <option value="externo">Mostrar apenas externos</option>
+        </select>
+      </div>
+      <p class="observacao">
+        Neste modelo híbrido, cada ferramenta pode ser configurada para abrir <strong>dentro do portal</strong> ou <strong>fora dele</strong>, em domínio próprio. O card “Dobras Cutâneas”, por exemplo, está configurado como <strong>externo</strong>.
+      </p>
+    </section>
+
+    <section class="grade" id="gradeApps">
+      <article class="card" data-nome="dobras cutaneas composicao corporal jackson pollock siri" data-modo="externo">
+        <h3>Dobras Cutâneas</h3>
+        <p class="descricao">
+          Calculadora didática para estimativa de densidade corporal e percentual de gordura com memória de cálculo passo a passo.
+        </p>
+        <div class="meta">
+          <span class="tag">Composição corporal</span>
+          <span class="tag">Jackson & Pollock</span>
+          <span class="status pronto">Pronto</span>
+          <span class="tag">Modo: externo</span>
+        </div>
+        <div class="acoes">
+          <a class="botao primario" href="https://calculadora-gabarito-jp.vercel.app" target="_blank" rel="noopener noreferrer">Abrir ferramenta</a>
+        </div>
+      </article>
+
+      <article class="card" data-nome="vo2 estimado cardiorrespiratorio testes de campo" data-modo="interno">
+        <h3>VO₂ Estimado</h3>
+        <p class="descricao">
+          Espaço reservado para futura ferramenta de estimativa de consumo máximo de oxigênio e interpretação didática.
+        </p>
+        <div class="meta">
+          <span class="tag">Cardiorrespiratório</span>
+          <span class="status breve">Em breve</span>
+          <span class="tag">Modo: interno</span>
+        </div>
+        <div class="acoes">
+          <a class="botao secundario" href="#">Em breve</a>
+        </div>
+      </article>
+
+      <article class="card" data-nome="tc6m caminhada 6 minutos" data-modo="interno">
+        <h3>Teste de Caminhada de 6 Minutos</h3>
+        <p class="descricao">
+          Espaço reservado para futura ferramenta de valores previstos, percentual previsto e interpretação funcional.
+        </p>
+        <div class="meta">
+          <span class="tag">Funcional</span>
+          <span class="tag">TC6M</span>
+          <span class="status breve">Em breve</span>
+          <span class="tag">Modo: interno</span>
+        </div>
+        <div class="acoes">
+          <a class="botao secundario" href="#">Em breve</a>
+        </div>
+      </article>
+
+      <article class="card" data-nome="avaliacao funcional testes bateria" data-modo="interno">
+        <h3>Avaliação Funcional</h3>
+        <p class="descricao">
+          Espaço reservado para registro e interpretação de testes motores e funcionais aplicados em diferentes populações.
+        </p>
+        <div class="meta">
+          <span class="tag">Testes funcionais</span>
+          <span class="status breve">Em breve</span>
+          <span class="tag">Modo: interno</span>
+        </div>
+        <div class="acoes">
+          <a class="botao secundario" href="#">Em breve</a>
+        </div>
+      </article>
+    </section>
+  </main>
+
+  <footer>
+    <p><strong>Prof. Dr. Dalmo Roberto Lopes Machado</strong> — REF0063 – Medidas e Avaliação</p>
+    <p>EEFERP – Universidade de São Paulo</p>
+  </footer>
+
+  <script>
+    const busca = document.getElementById('busca');
+    const filtroModo = document.getElementById('filtroModo');
+    const cards = document.querySelectorAll('.card');
+
+    function aplicarFiltros() {
+      const termo = busca.value.toLowerCase().trim();
+      const modo = filtroModo.value;
+
+      cards.forEach(card => {
+        const nome = card.dataset.nome.toLowerCase();
+        const modoCard = card.dataset.modo;
+
+        const atendeBusca = nome.includes(termo);
+        const atendeModo = modo === 'todos' || modoCard === modo;
+
+        card.classList.toggle('oculto', !(atendeBusca && atendeModo));
+      });
+    }
+
+    busca.addEventListener('input', aplicarFiltros);
+    filtroModo.addEventListener('change', aplicarFiltros);
+  </script>
+</body>
+</html>
