@@ -1,0 +1,38 @@
+[
+  {
+    "titulo": "Dobras Cutâneas",
+    "descricao": "Calculadora didática para estimativa de densidade corporal e percentual de gordura com memória de cálculo passo a passo.",
+    "categoria": "Composição corporal",
+    "tags": ["Jackson & Pollock", "Siri"],
+    "status": "Pronto",
+    "modo": "externo",
+    "url": "https://calculadora-gabarito-jp.vercel.app"
+  },
+  {
+    "titulo": "VO₂ Estimado",
+    "descricao": "Espaço reservado para futura ferramenta de estimativa de consumo máximo de oxigênio e interpretação didática.",
+    "categoria": "Cardiorrespiratório",
+    "tags": [],
+    "status": "Em breve",
+    "modo": "interno",
+    "url": "#"
+  },
+  {
+    "titulo": "Teste de Caminhada de 6 Minutos",
+    "descricao": "Espaço reservado para futura ferramenta de valores previstos, percentual previsto e interpretação funcional.",
+    "categoria": "Funcional",
+    "tags": ["TC6M"],
+    "status": "Em breve",
+    "modo": "interno",
+    "url": "#"
+  },
+  {
+    "titulo": "Avaliação Funcional",
+    "descricao": "Espaço reservado para registro e interpretação de testes motores e funcionais aplicados em diferentes populações.",
+    "categoria": "Testes funcionais",
+    "tags": [],
+    "status": "Em breve",
+    "modo": "interno",
+    "url": "#"
+  }
+]
