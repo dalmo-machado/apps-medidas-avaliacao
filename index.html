@@ -227,6 +227,14 @@
     .oculto{
       display:none !important;
     }
+
+    .aviso{
+      background:#fff;
+      border:1px solid var(--borda);
+      border-radius:18px;
+      padding:18px;
+      color:var(--texto-suave);
+    }
   </style>
 </head>
 <body>
@@ -238,7 +246,7 @@
       <div class="topbar">
         <div class="pill">Disciplina REF0063</div>
         <div class="pill">Portal de apps didáticos</div>
-        <div class="pill">Acesso centralizado às ferramentas</div>
+        <div class="pill">Biblioteca semiautomática</div>
       </div>
     </div>
   </header>
@@ -255,73 +263,12 @@
         </select>
       </div>
       <p class="observacao">
-        Neste modelo híbrido, cada ferramenta pode ser configurada para abrir <strong>dentro do portal</strong> ou <strong>fora dele</strong>, em domínio próprio. O card “Dobras Cutâneas”, por exemplo, está configurado como <strong>externo</strong>.
+        Cada ferramenta pode ser configurada para abrir <strong>dentro</strong> ou <strong>fora</strong> do portal. Para adicionar novos apps, basta editar o arquivo <strong>apps.json</strong>.
       </p>
     </section>
 
-    <section class="grade" id="gradeApps">
-      <article class="card" data-nome="dobras cutaneas composicao corporal jackson pollock siri" data-modo="externo">
-        <h3>Dobras Cutâneas</h3>
-        <p class="descricao">
-          Calculadora didática para estimativa de densidade corporal e percentual de gordura com memória de cálculo passo a passo.
-        </p>
-        <div class="meta">
-          <span class="tag">Composição corporal</span>
-          <span class="tag">Jackson & Pollock</span>
-          <span class="status pronto">Pronto</span>
-          <span class="tag">Modo: externo</span>
-        </div>
-        <div class="acoes">
-          <a class="botao primario" href="https://calculadora-gabarito-jp.vercel.app" target="_blank" rel="noopener noreferrer">Abrir ferramenta</a>
-        </div>
-      </article>
-
-      <article class="card" data-nome="vo2 estimado cardiorrespiratorio testes de campo" data-modo="interno">
-        <h3>VO₂ Estimado</h3>
-        <p class="descricao">
-          Espaço reservado para futura ferramenta de estimativa de consumo máximo de oxigênio e interpretação didática.
-        </p>
-        <div class="meta">
-          <span class="tag">Cardiorrespiratório</span>
-          <span class="status breve">Em breve</span>
-          <span class="tag">Modo: interno</span>
-        </div>
-        <div class="acoes">
-          <a class="botao secundario" href="#">Em breve</a>
-        </div>
-      </article>
-
-      <article class="card" data-nome="tc6m caminhada 6 minutos" data-modo="interno">
-        <h3>Teste de Caminhada de 6 Minutos</h3>
-        <p class="descricao">
-          Espaço reservado para futura ferramenta de valores previstos, percentual previsto e interpretação funcional.
-        </p>
-        <div class="meta">
-          <span class="tag">Funcional</span>
-          <span class="tag">TC6M</span>
-          <span class="status breve">Em breve</span>
-          <span class="tag">Modo: interno</span>
-        </div>
-        <div class="acoes">
-          <a class="botao secundario" href="#">Em breve</a>
-        </div>
-      </article>
-
-      <article class="card" data-nome="avaliacao funcional testes bateria" data-modo="interno">
-        <h3>Avaliação Funcional</h3>
-        <p class="descricao">
-          Espaço reservado para registro e interpretação de testes motores e funcionais aplicados em diferentes populações.
-        </p>
-        <div class="meta">
-          <span class="tag">Testes funcionais</span>
-          <span class="status breve">Em breve</span>
-          <span class="tag">Modo: interno</span>
-        </div>
-        <div class="acoes">
-          <a class="botao secundario" href="#">Em breve</a>
-        </div>
-      </article>
-    </section>
+    <section class="grade" id="gradeApps"></section>
+    <div id="mensagem" class="aviso" style="display:none;"></div>
   </main>
 
   <footer>
@@ -330,27 +277,98 @@
   </footer>
 
   <script>
+    const gradeApps = document.getElementById('gradeApps');
     const busca = document.getElementById('busca');
     const filtroModo = document.getElementById('filtroModo');
-    const cards = document.querySelectorAll('.card');
+    const mensagem = document.getElementById('mensagem');
+
+    let apps = [];
+
+    function classeStatus(status) {
+      return status.toLowerCase() === 'pronto' ? 'pronto' : 'breve';
+    }
+
+    function criarCard(app) {
+      const artigo = document.createElement('article');
+      artigo.className = 'card';
+      artigo.dataset.nome = [
+        app.titulo,
+        app.descricao,
+        app.categoria,
+        ...(app.tags || [])
+      ].join(' ').toLowerCase();
+      artigo.dataset.modo = app.modo;
+
+      const tagsHtml = (app.tags || [])
+        .map(tag => `<span class="tag">${tag}</span>`)
+        .join('');
+
+      const botaoClasse = app.status === 'Pronto' ? 'primario' : 'secundario';
+      const botaoTexto = app.status === 'Pronto' ? 'Abrir ferramenta' : 'Em breve';
+      const target = app.modo === 'externo' ? ' target="_blank" rel="noopener noreferrer"' : '';
+
+      artigo.innerHTML = `
+        <h3>${app.titulo}</h3>
+        <p class="descricao">${app.descricao}</p>
+        <div class="meta">
+          <span class="tag">${app.categoria}</span>
+          ${tagsHtml}
+          <span class="status ${classeStatus(app.status)}">${app.status}</span>
+          <span class="tag">Modo: ${app.modo}</span>
+        </div>
+        <div class="acoes">
+          <a class="botao ${botaoClasse}" href="${app.url}"${target}>${botaoTexto}</a>
+        </div>
+      `;
+
+      return artigo;
+    }
+
+    function renderizarApps(lista) {
+      gradeApps.innerHTML = '';
+      lista.forEach(app => {
+        gradeApps.appendChild(criarCard(app));
+      });
+    }
 
     function aplicarFiltros() {
       const termo = busca.value.toLowerCase().trim();
       const modo = filtroModo.value;
 
-      cards.forEach(card => {
-        const nome = card.dataset.nome.toLowerCase();
-        const modoCard = card.dataset.modo;
+      const filtrados = apps.filter(app => {
+        const texto = [
+          app.titulo,
+          app.descricao,
+          app.categoria,
+          ...(app.tags || [])
+        ].join(' ').toLowerCase();
 
-        const atendeBusca = nome.includes(termo);
-        const atendeModo = modo === 'todos' || modoCard === modo;
+        const atendeBusca = texto.includes(termo);
+        const atendeModo = modo === 'todos' || app.modo === modo;
 
-        card.classList.toggle('oculto', !(atendeBusca && atendeModo));
+        return atendeBusca && atendeModo;
       });
+
+      renderizarApps(filtrados);
+    }
+
+    async function carregarApps() {
+      try {
+        const resposta = await fetch('./apps.json');
+        if (!resposta.ok) throw new Error('Falha ao carregar apps.json');
+        apps = await resposta.json();
+        renderizarApps(apps);
+      } catch (erro) {
+        mensagem.style.display = 'block';
+        mensagem.textContent = 'Não foi possível carregar a biblioteca de aplicativos. Verifique se o arquivo apps.json foi criado corretamente.';
+        console.error(erro);
+      }
     }
 
     busca.addEventListener('input', aplicarFiltros);
     filtroModo.addEventListener('change', aplicarFiltros);
+
+    carregarApps();
   </script>
 </body>
 </html>
